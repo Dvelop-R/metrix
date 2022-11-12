@@ -3,14 +3,17 @@
 \docType{data}
 \name{example_data}
 \alias{example_data}
-\title{Example data for metrix package.}
+\title{Example data for Metrix package.}
 \format{
-The data is properly formated for being used with metrix functions
+The data is properly formatted for being used with Metrix functions.
 }
 \usage{
 example_data
 }
 \description{
-A dataset containing entries from to sites.
+Example taxa data from two sites (P1 and P2).
+}
+\seealso{
+\link[metrix]{read_data}, \link[metrix]{metrix_table_template}
 }
 \keyword{datasets}

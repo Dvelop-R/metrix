@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_data.R
 \name{read_data}
 \alias{read_data}
-\title{Read taxon data}
+\title{Read taxa data}
 \usage{
 read_data(file_name, correct = TRUE, verbose = FALSE)
 }
@@ -11,7 +11,7 @@ read_data(file_name, correct = TRUE, verbose = FALSE)
 
 \item{correct}{A logical value indicating if the auto correct system should be used (default \code{correct = TRUE}).}
 
-\item{verbose}{A logical value indicating indicating if progress messages should be given.}
+\item{verbose}{A logical value indicating if progress messages should be given.}
 }
 \value{
 The function returns:
@@ -21,8 +21,8 @@ The function returns:
 Load data from a formatted taxon table
 }
 \details{
-This function reads a formatted taxon .csv file and checks whether it is properly formatted. This function will determine which character to use as separator for data and decimals. \cr The format of the input table must contain 8 columns that refer to the scientific and functional classification of the taxa. The first 7 columns refer to Class, Order, Family, Subfamily, Tribe, Genus and Species. Special care must be taken when entering the taxa nomenclature, because if it is misspelled, the package will not take this classification into account. It is not necessary to put genera and species in italics. Column 8 refers to the functional group of the taxa, which can be filtering collectors (FC), gathering collectors (GC), predators (P), scrapers (SCR) and shredders (SHR). After these columns, the places where you want to calculate the packet metrics are entered. It is essential that the site data are located after these taxonomic and functional classification columns. The user will be able to load the table with the amount of taxa and sites, as desired. \cr This function also has an autocorrect system that compares the words used to describe a taxon with a list of properly written words in order to find possible input errors. If correct = TRUE the autocorrect system will check all the names and perform corrections when possible (the file will not be modified). The autocorrect system will inform the user if it finds an issue that needs a manual check.
+This function reads a formatted taxa .csv file and checks whether it is properly formatted. This function will determine which character to use as separator for data and decimals. \cr The format of the input table must contain 8 columns that refer to the scientific and functional classification of the taxa. The first 7 columns refer to Class, Order, Family, Subfamily, Tribe, Genus and Species. Special care must be taken when entering the taxa nomenclature, because if it is misspelled, the package will not take this classification into account. It is not necessary to put genera and species in italics. Column 8 refers to the functional group of the taxa, which can be filtering collectors (FC), gathering collectors (GC), predators (P), scrapers (SCR) and shredders (SHR). After these columns, the places where you want to calculate the packet metrics are entered. It is essential that the site data are located after these taxonomic and functional classification columns. The user will be able to load the table with the amount of taxa and sites, as desired. \cr Site columns with no entries and rows with no information of functional classification of the taxa will not be loaded. This function also has an autocorrect system that compares the words used to describe a taxon with a list of properly written words in order to find possible input errors. If correct = TRUE the autocorrect system will check all the names and perform corrections when possible (the file will not be modified). The autocorrect system will inform the user if it finds an issue that needs a manual check.
 }
 \author{
-Juan Manuel Cabrera and Julieta Capeleti.
+Juan Manuel Cabrera and Julieta Capeletti.
 }

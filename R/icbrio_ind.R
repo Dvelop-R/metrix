@@ -14,14 +14,13 @@
 #' \item{Icbrio_c}{The ICBrio water quality class (Kuhlmann et al. 2012).}
 #'
 #' @seealso \link[metrix]{read_data}, \link{biotic_ind}
-#' @author Juan Manuel Cabrera and Julieta Capeleti.
-#' @references
-#' \itemize{
-#' \item{Kuhlmann M, Imbimbo HV, Ogura LL (2012) <https://cetesb.sp.gov.br/aguas-interiores/wp-content/uploads/sites/12/2013/11/protocolo-biomonitoramento-2012.pdf>}
-#' }
+#' @author Juan Manuel Cabrera and Julieta Capeletti.
+#'
+#' @references Kuhlmann M, Imbimbo HV, Ogura LL (2012). Protocolo para o biomonitoramento com as comunidades bentônicas de rios e reservatórios do estado de São Paulo. \url{https://cetesb.sp.gov.br/aguas-interiores/wp-content/uploads/sites/12/2013/11/protocolo-biomonitoramento-2012.pdf}
+#'
 #' @examples
 #'
-#'#Example data is a properly formatted table with richness measures of two sites
+#'#Load example data
 #' example_data
 #'
 #'#Run icbrio_ind with that example_data
@@ -38,16 +37,17 @@ icbrio_ind <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
 
   if(verbose){message("Checking table format for ICbrio index calculation...")}
 
-  if (chkt_f(dataset) == FALSE) {stop("Check table format.")}
+  if(chkt_f(dataset) == FALSE) {stop("Check table format.")}
 
-  #den_t
-  den_t<-apply(dataset[,9:ncol(dataset)],2,sum)
-
-  #n_taxa
-  n_taxa<-apply(dataset[,9:ncol(dataset)],2,function(c)sum(c!=0))
-
-  #ind_shan
-  ind_shan<-apply(dataset[,9:ncol(dataset)],2,vegan::diversity,index="shannon")
+  if(ncol(dataset)==9){
+    den_t<-sum(dataset[,9])
+    n_taxa<-sum(dataset[,9]!=0)
+    ind_shan<-vegan::diversity(dataset[,9],index = "shannon")
+  }else{
+    den_t<-apply(dataset[,9:ncol(dataset)],2,sum)
+    n_taxa<-apply(dataset[,9:ncol(dataset)],2,function(c)sum(c!=0))
+    ind_shan<-apply(dataset[,9:ncol(dataset)],2,vegan::diversity,index="shannon")
+    }
 
 
 tol_g<-as.factor(c("Naididae","Chironomus","Tubifex","Aulodrilus",
@@ -59,8 +59,14 @@ sen_t<-as.factor(c("EPHEMEROPTERA","PLECOPTERA","TRICHOPTERA","Stempellina"))
 a<-(tolower(as.character(dataset$Genus))%in%tolower(as.character(tol_g)))
 b<-(tolower(as.character(dataset$Family))%in%tolower(as.character(tol_g)))
 c<-a+b
-r_tol<-apply(dataset[c!=0,9:ncol(dataset)],2,Matrix::nnzero)
-n_tol<-apply(dataset[c!=0,9:ncol(dataset)],2,sum)
+
+if(ncol(dataset)==9){
+  r_tol<-Matrix::nnzero(dataset[c!=0,9])
+  n_tol<-sum(dataset[c!=0,9])
+}else{
+  r_tol<-apply(dataset[c!=0,9:ncol(dataset)],2,Matrix::nnzero)
+  n_tol<-apply(dataset[c!=0,9:ncol(dataset)],2,sum)}
+
 dtol_dtot<-n_tol/den_t
 dtol_dtot[is.nan(dtol_dtot)] <- 0
 
@@ -68,7 +74,12 @@ dtol_dtot[is.nan(dtol_dtot)] <- 0
 a<-(tolower(as.character(dataset$Genus))%in%tolower(as.character(sen_t)))
 b<-(tolower(as.character(dataset$Order))%in%tolower(as.character(sen_t)))
 c<-a+b
-r_sen<-apply(dataset[c!=0,9:ncol(dataset)],2,Matrix::nnzero)
+
+if(ncol(dataset)==9){
+  r_sen<-Matrix::nnzero(dataset[c!=0,9])
+}else{
+  r_sen<-apply(dataset[c!=0,9:ncol(dataset)],2,Matrix::nnzero)}
+
 
 
 n_taxa_score<-n_taxa

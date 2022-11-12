@@ -1,6 +1,6 @@
-#' Richness measures
+#' Richness metrics
 #'
-#' Calculates trophic measures
+#' Calculates richness measures
 #'
 #' The richness measures reflect the diversity of the aquatic complex (Resh et al. 1995). Increased diversity correlates with increased assemblage health and suggests that niche space, habitat, and food source are adequate to support the survival and spread of many taxa. The number of taxa measures the general variety of the macroinvertebrate assemblage. Identities of major taxonomic groups are not derived from the total taxa metric, but the removal of taxa from naturally diverse systems can be detected easily (Barbour et al., 1996).
 #'
@@ -31,37 +31,58 @@
 #' \item{n_ephetrich}{N° of Ephemeroptera + Trichoptera taxa.}
 #'
 #' @seealso \link[metrix]{read_data}
-#' @author Juan Manuel Cabrera and Julieta Capeleti.
-#' @references
-#' \itemize{
-#' \item{Resh VH, Norris RH & Barbour MT (1995) \doi{10.1111/j.1442-9993.1995.tb00525.x>}}
-#' \item{Barbour MT, Gerritsen J, Griffith GE, Frydenborg R, McCarron E, White JS & Bastian ML (1996) \doi{10.2307/1467948>}}
-#' }
+#' @author Juan Manuel Cabrera and Julieta Capeletti.
+#'
+#' @references Resh VH, Norris RH & Barbour MT (1995). Design and implementation of rapid assessment approaches for water resource monitoring using benthic macroinvertebrates. \doi{10.1111/j.1442-9993.1995.tb00525.x}
+#' @references Barbour MT, Gerritsen J, Griffith GE, Frydenborg R, McCarron E, White JS & Bastian ML (1996). A Framework for Biological Criteria for Florida Streams Using Benthic Macroinvertebrates. \doi{10.2307/1467948}
+#'
 #' @examples
-#'#Example data is a properly formatted table with richness measures of two sites
+#'#Load example data
 #' example_data
 #'
-#'#Run rich_diver with that example_data
-#' richd<-rich_diver(example_data)
+#'#Run rich_metrics with that example_data
+#' richmetrics<-rich_metrics(example_data)
 #'
 #'#Check results
-#' richd
+#' richmetrics
 #' @export
 
 
-rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
+rich_metrics <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
 {
 
   if(verbose){message("Checking table format for Richness measures calculation...")}
 
   if (chkt_f(dataset) == FALSE) {stop("Check table format.")}
 
-  n_taxa<-apply(dataset[,9:ncol(dataset)],2,function(c)sum(c!=0))
-
-
-  #n_fam
+  if(ncol(dataset)==9){
+    n_taxa<-sum(dataset[,9]!=0)
+    n_chir_tax<-numeric(length = length(9:ncol(dataset)))
+    n_chir_tax<-sum(dataset[(ifelse(dataset$Order=="Diptera" & dataset$Family!="",
+                                    dataset$Order=="Diptera" & dataset$Family=="Chironomidae",
+                                    dataset$Order=="Diptera")),9]!=0)
+    n_non_chir_dip_tax<-sum(dataset[(ifelse(dataset$Order=="Diptera" & dataset$Family!="",
+                                            dataset$Order=="Diptera" & dataset$Family!="Chironomidae",
+                                            dataset$Order=="Diptera")),9]!=0)
+    n_mol_tax<-sum(dataset[dataset$Class=="Mollusca",9]!=0)
+    n_oligo_tax<-sum(dataset[dataset$Order=="Oligochaeta",9]!=0)
+    n_ephetrich<-sum(dataset[dataset$Order=="Trichoptera"|dataset$Order=="Ephemeroptera",9]!=0)
+  }else{
+    n_taxa<-apply(dataset[,9:ncol(dataset)],2,function(c)sum(c!=0))
+    n_chir_tax<-numeric(length = length(9:ncol(dataset)))
+    n_chir_tax<-apply(dataset[(ifelse(dataset$Order=="Diptera" & dataset$Family!="",
+                                      dataset$Order=="Diptera" & dataset$Family=="Chironomidae",
+                                      dataset$Order=="Diptera")),
+                              9:ncol(dataset)],2,function(c)sum(c!=0))
+    n_non_chir_dip_tax<-apply(dataset[(ifelse(dataset$Order=="Diptera" & dataset$Family!="",
+                                              dataset$Order=="Diptera" & dataset$Family!="Chironomidae",
+                                              dataset$Order=="Diptera")),
+                                      9:ncol(dataset)],2,function(c)sum(c!=0))
+    n_mol_tax<-apply(dataset[dataset$Class=="Mollusca",9:ncol(dataset)],2,function(c)sum(c!=0))
+    n_oligo_tax<-apply(dataset[dataset$Order=="Oligochaeta",9:ncol(dataset)],2,function(c)sum(c!=0))
+    n_ephetrich<-apply(dataset[dataset$Order=="Trichoptera"|dataset$Order=="Ephemeroptera",
+                               9:ncol(dataset)],2,function(c)sum(c!=0))}
   n_fam<-numeric(length = length(9:ncol(dataset)))
-
   for(i in 9:ncol(dataset))
   {
     aux<-dataset[dataset[,i]!=0,]
@@ -69,7 +90,6 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     n_fam[i-8]<-length(fam[fam!=""])
   }
 
-  #n_gen
   n_gen<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -78,7 +98,6 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     n_gen[i-8]<-length(gen[gen!=""])
   }
 
-  #n_insec_fam
   n_insec_fam<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -88,7 +107,6 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     n_insec_fam[i-8]<-length(fam)
   }
 
-  #n_non_insec_order
   n_non_insec_order<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -98,8 +116,6 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     n_non_insec_order[i-8]<-length(order)
   }
 
-
-  #n_dip_fam
   n_dip_fam<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -109,7 +125,6 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     n_dip_fam[i-8]<-length(fam)
   }
 
-  #n_dip_gen
   n_dip_gen<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -119,7 +134,6 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     n_dip_gen[i-8]<-length(gen)
   }
 
-  #n_dip_chir_gen
   n_dip_chir_gen<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -129,15 +143,6 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     n_dip_chir_gen[i-8]<-length(gen)
   }
 
-
-  #n_chir_tax
-  n_chir_tax<-numeric(length = length(9:ncol(dataset)))
-    n_chir_tax<-apply(dataset[(ifelse(dataset$Order=="Diptera" & dataset$Family!="",
-                                    dataset$Order=="Diptera" & dataset$Family=="Chironomidae",
-                                    dataset$Order=="Diptera")),
-                            9:ncol(dataset)],2,function(c)sum(c!=0))
-
-  #n_tany_tax
   n_tany_tax<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -145,11 +150,9 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     if(!anyNA(aux$Tribe)){
       aux<-aux[aux$Tribe=="Tanytarsini",]
       tri=as.character(aux$Tribe)
-      n_tany_tax[i-8]<-length(tri)
-    }
+      n_tany_tax[i-8]<-length(tri)}
   }
 
-  #n_stemp_tax
   n_stemp_tax<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -158,18 +161,6 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     gen=as.character(aux$Genus)
     n_stemp_tax[i-8]<-length(gen)
   }
-
-  #n_non_chir_dip_tax
-  n_non_chir_dip_tax<-apply(dataset[(ifelse(dataset$Order=="Diptera" & dataset$Family!="",
-                                            dataset$Order=="Diptera" & dataset$Family!="Chironomidae",
-                                            dataset$Order=="Diptera")),
-                                    9:ncol(dataset)],2,function(c)sum(c!=0))
-
-  #n_mol_tax
-  n_mol_tax<-apply(dataset[dataset$Class=="Mollusca",9:ncol(dataset)],2,function(c)sum(c!=0))
-
-
-  #n_gastr_tax
   n_gastr_tax<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -179,8 +170,6 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     n_gastr_tax[i-8]<-length(order)
   }
 
-
-  #n_biv_tax
   n_biv_tax<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -190,7 +179,6 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     n_biv_tax[i-8]<-length(order)
   }
 
-  #n_crus_tax
   n_crus_tax<-numeric(length = length(9:ncol(dataset)))
   for(i in 9:ncol(dataset))
   {
@@ -199,31 +187,20 @@ rich_diver <- function(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
     class=as.character(aux$Class)
     n_crus_tax[i-8]<-length(class)
   }
-
-  #n_crusmol
   n_crusmol<-n_crus_tax+n_mol_tax
-
-  #n_oligo_tax
-  n_oligo_tax<-apply(dataset[dataset$Order=="Oligochaeta",9:ncol(dataset)],2,function(c)sum(c!=0))
-
-
-  #n_ephetrich
-  n_ephetrich<-apply(dataset[dataset$Order=="Trichoptera"|dataset$Order=="Ephemeroptera",
-                             9:ncol(dataset)],2,function(c)sum(c!=0))
-
 
   rcd<-data.frame(n_taxa, n_fam, n_gen, n_insec_fam, n_non_insec_order, n_dip_fam, n_dip_gen, n_dip_chir_gen,
                   n_chir_tax, n_tany_tax, n_stemp_tax, n_non_chir_dip_tax, n_mol_tax, n_gastr_tax, n_biv_tax,
                   n_crus_tax, n_crusmol, n_oligo_tax, n_ephetrich, stringsAsFactors = TRUE)
-  Richdiver<-data.frame(t(rcd))
-  colnames(Richdiver)<-colnames(dataset[9:ncol(dataset)])
-  Richdiver<-round(Richdiver,2)
+  richmetrics<-data.frame(t(rcd))
+  colnames(richmetrics)<-colnames(dataset[9:ncol(dataset)])
+  richmetrics<-round(richmetrics,2)
 
   if(store==TRUE){
-    result_fname<-paste(substitute(dataset),"_rich_diver.csv",sep="")
-    utils::write.table(x = Richdiver, file = result_fname, sep = ";", dec = dec_c, col.names =  NA)
+    result_fname<-paste(substitute(dataset),"_rich_metric.csv",sep="")
+    utils::write.table(x = richmetrics, file = result_fname, sep = ";", dec = dec_c, col.names =  NA)
     print (paste("Results were stored in ",getwd(),"/",result_fname, sep=""))
   }
 
-  return(Richdiver)
+  return(richmetrics)
     }

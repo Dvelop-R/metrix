@@ -10,7 +10,7 @@
 #'
 #' @return Logical value indicating if the data is properly formatted
 #' @seealso \link[metrix]{read_data}
-#' @author Juan Manuel Cabrera and Julieta Capeleti.
+#' @author Juan Manuel Cabrera and Julieta Capeletti.
 #' @noRd
 
 chkt_f <- function(dataset)

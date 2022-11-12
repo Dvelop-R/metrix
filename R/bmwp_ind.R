@@ -14,14 +14,12 @@
 #' \item{Ibmwp_c}{The BMWP and ASPT water quality class (Armitage et al. 1983).}
 #'
 #' @seealso \link[metrix]{read_data}, \link{bmwp_p_ind}, \link{bmwp_p_p_ind}, \link{biotic_ind}
-#' @author Juan Manuel Cabrera and Julieta Capeleti.
-#' @references
-#' \itemize{
-#' \item{Armitage PD, Moss D, Wright JF & Furse MT (1983) \doi{10.1016/0043-1354(83)90188-4>}}
-#' }
+#' @author Juan Manuel Cabrera and Julieta Capeletti.
+#' @references Armitage PD, Moss D, Wright JF & Furse MT (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. \doi{10.1016/0043-1354(83)90188-4}
+#'
 #' @examples
 #'
-#'#Example data is a properly formatted table with richness measures of two sites
+#'#Load example data
 #' example_data
 #'
 #'#Run bmwp_ind with that example_data

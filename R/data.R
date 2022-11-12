@@ -1,6 +1,9 @@
-#' Example data for metrix package.
+#' Example data for Metrix package.
 #'
-#' A dataset containing entries from to sites.
+#' @docType data
+#' @name example_data
+#' @description Example taxa data from two sites (P1 and P2).
 #'
-#' @format The data is properly formated for being used with metrix functions
-"example_data"
+#' @format The data is properly formatted for being used with Metrix functions.
+#' @seealso \link[metrix]{read_data}, \link[metrix]{metrix_table_template}
+'example_data'

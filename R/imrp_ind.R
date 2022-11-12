@@ -2,7 +2,7 @@
 #'
 #' Calculates the Indice de Macroinvertebrados en Rios Pampeanos Index
 #'
-#'IMRP was created for the rivers of the Pampean plain (Rodrigues Capítulo 1999). This index is based on the sum of ecological values for each taxon. This value is inversely proportional to the degree of tolerance to contamination, varying from 0.1 for highly tolerant taxa to 2.0 for the most sensitive. Identification to family is sufficient to calculate the IMRP score.
+#' IMRP was created for the rivers of the Pampean plain (Rodrigues Capítulo 1999). This index is based on the sum of ecological values for each taxon. This value is inversely proportional to the degree of tolerance to contamination, varying from 0.1 for highly tolerant taxa to 2.0 for the most sensitive. Identification to family is sufficient to calculate the IMRP score.
 #'
 #' @param dataset A data.frame obtained from \code{read_data}.
 #' @param store A logical value indicating if the user want to store the results in a file.
@@ -14,14 +14,13 @@
 #' \item{Imrp_c}{The IMRP index water quality class (Rodrigues Capítulo 1999).}
 #'
 #' @seealso \link[metrix]{read_data}, \link{biotic_ind}
-#' @author Juan Manuel Cabrera and Julieta Capeleti.
-#' @references
-#' \itemize{
-#' \item{Rodrigues Capítulo A (1999) < https://www.biotaxa.org/RSEA/article/view/32771>}
-#' }
+#' @author Juan Manuel Cabrera and Julieta Capeletti.
+#'
+#' @references Rodrigues Capítulo A (1999). The macroinvertebrate as indicators of water quality in Pampean rivers. \url{https://www.biotaxa.org/RSEA/article/view/32771}
+#'
 #' @examples
 #'
-#'#Example data is a properly formatted table with richness measures of two sites
+#'#Load example data
 #' example_data
 #'
 #'#Run imrp_ind with that example_data

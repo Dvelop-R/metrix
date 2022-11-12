@@ -13,7 +13,7 @@ icbrio_ind(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
 
 \item{dec_c}{A character used for decimal separator on results file.}
 
-\item{verbose}{A logical value indicating indicating if progress messages should be given.}
+\item{verbose}{A logical value indicating if progress messages should be given.}
 }
 \value{
 This function returns a list with the following components:
@@ -28,7 +28,7 @@ ICBrio was created to monitor the quality of inland waters in the state of São 
 }
 \examples{
 
-#Example data is a properly formatted table with richness measures of two sites
+#Load example data
 example_data
 
 #Run icbrio_ind with that example_data
@@ -39,13 +39,11 @@ icb$Icbrio_n
 icb$Icbrio_c
 }
 \references{
-\itemize{
-\item{Kuhlmann M, Imbimbo HV, Ogura LL (2012) <https://cetesb.sp.gov.br/aguas-interiores/wp-content/uploads/sites/12/2013/11/protocolo-biomonitoramento-2012.pdf>}
-}
+Kuhlmann M, Imbimbo HV, Ogura LL (2012). Protocolo para o biomonitoramento com as comunidades bentônicas de rios e reservatórios do estado de São Paulo. \url{https://cetesb.sp.gov.br/aguas-interiores/wp-content/uploads/sites/12/2013/11/protocolo-biomonitoramento-2012.pdf}
 }
 \seealso{
 \link[metrix]{read_data}, \link{biotic_ind}
 }
 \author{
-Juan Manuel Cabrera and Julieta Capeleti.
+Juan Manuel Cabrera and Julieta Capeletti.
 }

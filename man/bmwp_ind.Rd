@@ -13,7 +13,7 @@ bmwp_ind(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
 
 \item{dec_c}{A character used for decimal separator on results file.}
 
-\item{verbose}{A logical value indicating indicating if progress messages should be given.}
+\item{verbose}{A logical value indicating if progress messages should be given.}
 }
 \value{
 This function returns a list with the following components:
@@ -28,7 +28,7 @@ The Biological Monitoring Working Party (BMWP) was set up in 1976. Its terms of 
 }
 \examples{
 
-#Example data is a properly formatted table with richness measures of two sites
+#Load example data
 example_data
 
 #Run bmwp_ind with that example_data
@@ -39,13 +39,11 @@ bmwp$Ibmwp_n
 bmwp$Ibmwp_c
 }
 \references{
-\itemize{
-\item{Armitage PD, Moss D, Wright JF & Furse MT (1983) \doi{10.1016/0043-1354(83)90188-4>}}
-}
+Armitage PD, Moss D, Wright JF & Furse MT (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. \doi{10.1016/0043-1354(83)90188-4}
 }
 \seealso{
 \link[metrix]{read_data}, \link{bmwp_p_ind}, \link{bmwp_p_p_ind}, \link{biotic_ind}
 }
 \author{
-Juan Manuel Cabrera and Julieta Capeleti.
+Juan Manuel Cabrera and Julieta Capeletti.
 }

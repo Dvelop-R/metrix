@@ -13,12 +13,12 @@ biotic_ind(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
 
 \item{dec_c}{A character used for decimal separator on results file.}
 
-\item{verbose}{A logical value indicating indicating if progress messages should be given.}
+\item{verbose}{A logical value indicating if progress messages should be given.}
 }
 \value{
 This function returns a list with the following components:
-\item{Bioind_n}{The numerical values of the biotic indexes.}
-\item{Bioind_c}{The water quality class assign to each sample site according to the numerical value of the biotic indexes}
+\item{bioind_n}{The numerical values of the biotic indexes.}
+\item{bioind_c}{The water quality class assign to each sample site according to the numerical value of the biotic indexes}
 }
 \description{
 Calculates BMWP, BMWP', BMWP'', IMRP and ICBrio indexes
@@ -28,28 +28,30 @@ The biotic indicators consist of the combination of two or three properties of t
 }
 \examples{
 
-#Example data is a properly formatted table with richness measures of two sites
+#Load example data
 example_data
 
 #Run biotic_ind with that example_data
 biotic<-biotic_ind(example_data)
 
 #Check results
-biotic$Bioind_n
-biotic$Bioind_c
+biotic$bioind_n
+biotic$bioind_c
 }
 \references{
-\itemize{
-\item{Armitage PD, Moss D, Wright JF & Furse MT (1983) \doi{10.1016/0043-1354(83)90188-4>} }
-\item{Alba-Tercedor J & Sánchez-Ortega A (1988) <https://www.limnetica.com/documentos/limnetica/limnetica-4-1-p-51.pdf>}
-\item{Loyola RGN (2000) <https://www.iat.pr.gov.br/sites/agua-terra/arquivos_restritos/files/documento/2021-03/bioindicadores_qualidade_aguas_2001_2002.pdf>}
-\item{Rodrigues Capítulo A (1999) < https://www.biotaxa.org/RSEA/article/view/32771>}
-\item{Kuhlmann M, Imbimbo HV, Ogura LL (2012) <https://cetesb.sp.gov.br/aguas-interiores/wp-content/uploads/sites/12/2013/11/protocolo-biomonitoramento-2012.pdf>}
-}
+Armitage PD, Moss D, Wright JF & Furse MT (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. \doi{10.1016/0043-1354(83)90188-4}
+
+Alba-Tercedor J & Sánchez-Ortega A (1988). A simple and quick method to evaluate biological quality of running freshwater based on Hellawell (1978). \url{https://www.limnetica.com/documentos/limnetica/limnetica-4-1-p-51.pdf}
+
+Loyola RGN (2000). Atual estágio do IAP no uso de índices biológicos de qualidade. Bioindicadores qualidade aguas \url{https://www.iat.pr.gov.br/sites/agua-terra/arquivos_restritos/files/documento/2021-03/bioindicadores_qualidade_aguas_2001_2002.pdf}
+
+Rodrigues Capítulo A (1999). The macroinvertebrate as indicators of water quality in Pampean rivers. \url{https://www.biotaxa.org/RSEA/article/view/32771}
+
+Kuhlmann M, Imbimbo HV, Ogura LL (2012). Protocolo para o biomonitoramento com as comunidades bentônicas de rios e reservatórios do estado de São Paulo. \url{https://cetesb.sp.gov.br/aguas-interiores/wp-content/uploads/sites/12/2013/11/protocolo-biomonitoramento-2012.pdf}
 }
 \seealso{
 \link[metrix]{read_data}, \link{bmwp_ind}, \link{bmwp_p_ind}, \link{bmwp_p_p_ind}, \link{imrp_ind}, \link{icbrio_ind}
 }
 \author{
-Juan Manuel Cabrera and Julieta Capeleti.
+Juan Manuel Cabrera and Julieta Capeletti.
 }

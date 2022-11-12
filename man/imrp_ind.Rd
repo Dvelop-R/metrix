@@ -13,7 +13,7 @@ imrp_ind(dataset, store = FALSE, dec_c = ".", verbose = FALSE)
 
 \item{dec_c}{A character used for decimal separator on results file.}
 
-\item{verbose}{A logical value indicating indicating if progress messages should be given.}
+\item{verbose}{A logical value indicating if progress messages should be given.}
 }
 \value{
 This function returns a list with the following components:
@@ -28,7 +28,7 @@ IMRP was created for the rivers of the Pampean plain (Rodrigues Capítulo 1999).
 }
 \examples{
 
-#Example data is a properly formatted table with richness measures of two sites
+#Load example data
 example_data
 
 #Run imrp_ind with that example_data
@@ -39,13 +39,11 @@ imrp$Imrp_n
 imrp$Imrp_c
 }
 \references{
-\itemize{
-\item{Rodrigues Capítulo A (1999) < https://www.biotaxa.org/RSEA/article/view/32771>}
-}
+Rodrigues Capítulo A (1999). The macroinvertebrate as indicators of water quality in Pampean rivers. \url{https://www.biotaxa.org/RSEA/article/view/32771}
 }
 \seealso{
 \link[metrix]{read_data}, \link{biotic_ind}
 }
 \author{
-Juan Manuel Cabrera and Julieta Capeleti.
+Juan Manuel Cabrera and Julieta Capeletti.
 }

@@ -14,15 +14,12 @@
 #' \item{Ibmwp_p_c}{The BMWP’ index water quality classes (Alba Tercedor and Sánchez Ortega 1988).}
 #'
 #' @seealso \link[metrix]{read_data}, \link{bmwp_ind}, \link{bmwp_p_p_ind}, \link{biotic_ind}
-#' @author Juan Manuel Cabrera and Julieta Capeleti.
-#' @references
-#' \itemize{
-#' \item{Armitage PD, Moss D, Wright JF & Furse MT (1983) \doi{10.1016/0043-1354(83)90188-4>}}
-#' \item{Alba-Tercedor J & Sánchez-Ortega A (1988) <https://www.limnetica.com/documentos/limnetica/limnetica-4-1-p-51.pdf>}
-#' }
+#' @author Juan Manuel Cabrera and Julieta Capeletti.
+#' @references Armitage PD, Moss D, Wright JF & Furse MT (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. \doi{10.1016/0043-1354(83)90188-4}
+#' @references Alba-Tercedor J & Sánchez-Ortega A (1988). A simple and quick method to evaluate biological quality of running freshwater based on Hellawell (1978). \url{https://www.limnetica.com/documentos/limnetica/limnetica-4-1-p-51.pdf}
 #' @examples
 #'
-#'#Example data is a properly formatted table with richness measures of two sites
+#'#Load example data
 #' example_data
 #'
 #'#Run bmwp_p_ind with that example_data

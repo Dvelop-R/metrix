@@ -1,8 +1,8 @@
-#' Read taxon data
+#' Read taxa data
 #'
 #' Load data from a formatted taxon table
 #'
-#' This function reads a formatted taxon .csv file and checks whether it is properly formatted. This function will determine which character to use as separator for data and decimals. \cr The format of the input table must contain 8 columns that refer to the scientific and functional classification of the taxa. The first 7 columns refer to Class, Order, Family, Subfamily, Tribe, Genus and Species. Special care must be taken when entering the taxa nomenclature, because if it is misspelled, the package will not take this classification into account. It is not necessary to put genera and species in italics. Column 8 refers to the functional group of the taxa, which can be filtering collectors (FC), gathering collectors (GC), predators (P), scrapers (SCR) and shredders (SHR). After these columns, the places where you want to calculate the packet metrics are entered. It is essential that the site data are located after these taxonomic and functional classification columns. The user will be able to load the table with the amount of taxa and sites, as desired. \cr This function also has an autocorrect system that compares the words used to describe a taxon with a list of properly written words in order to find possible input errors. If correct = TRUE the autocorrect system will check all the names and perform corrections when possible (the file will not be modified). The autocorrect system will inform the user if it finds an issue that needs a manual check.
+#' This function reads a formatted taxa .csv file and checks whether it is properly formatted. This function will determine which character to use as separator for data and decimals. \cr The format of the input table must contain 8 columns that refer to the scientific and functional classification of the taxa. The first 7 columns refer to Class, Order, Family, Subfamily, Tribe, Genus and Species. Special care must be taken when entering the taxa nomenclature, because if it is misspelled, the package will not take this classification into account. It is not necessary to put genera and species in italics. Column 8 refers to the functional group of the taxa, which can be filtering collectors (FC), gathering collectors (GC), predators (P), scrapers (SCR) and shredders (SHR). After these columns, the places where you want to calculate the packet metrics are entered. It is essential that the site data are located after these taxonomic and functional classification columns. The user will be able to load the table with the amount of taxa and sites, as desired. \cr Site columns with no entries and rows with no information of functional classification of the taxa will not be loaded. This function also has an autocorrect system that compares the words used to describe a taxon with a list of properly written words in order to find possible input errors. If correct = TRUE the autocorrect system will check all the names and perform corrections when possible (the file will not be modified). The autocorrect system will inform the user if it finds an issue that needs a manual check.
 #'
 #' @param file_name Name of formatted taxon table file. Use \code{metrix_table_template} to create a new formatted table file.
 #' @param correct A logical value indicating if the auto correct system should be used (default \code{correct = TRUE}).
@@ -10,7 +10,7 @@
 #'
 #' @return The function returns:
 #' \item{dataset}{A table that can be used as input for other metrix functions.}
-#' @author Juan Manuel Cabrera and Julieta Capeleti.
+#' @author Juan Manuel Cabrera and Julieta Capeletti.
 #' @export
 
 
@@ -48,6 +48,7 @@ if (numfields == 1){
 
   dataset<-utils::read.csv(file_name, header = TRUE,strip.white = TRUE,blank.lines.skip = TRUE)
   if(is.character(dataset[1,9])){stop("Could not retrieve numerical values from table. Please check decimal separators.")}
+
 }
 
 if (numfields != 1){
@@ -71,6 +72,24 @@ if (numfields != 1){
   if(verbose){message (" ")}
 }
 
+if(verbose){message("Checking empty rows and columns...")}
+dataset[,9:ncol(dataset)][is.na(dataset[,9:ncol(dataset)])]<-0
+emp_cat<-as.numeric(row.names(dataset[apply((dataset[,1:8]==""),1,all),]))
+if(length(emp_cat)==0){emp_cat<-0
+  }
+if(ncol(dataset)==9){emp_val<-as.numeric(row.names(dataset[dataset[,9:ncol(dataset)]==0,]))
+}else{
+  emp_val<-as.numeric(row.names(dataset[apply((dataset[,9:ncol(dataset)]==0),1,all),]))
+  }
+if(length(emp_val)==0){emp_val<-0}
+c_rows<-unique(c(emp_cat,emp_val))
+if(any(c_rows==0)){c_rows<-c_rows[-which(c_rows==0)]}
+if(length(c_rows)!=0){dataset=dataset[-c_rows,]}
+
+cindex<-as.numeric(apply((dataset[,1:ncol(dataset)]==0),2,all))
+emp_site<-which(cindex %in% 1)
+emp_site_name<-colnames(dataset)[emp_site]
+if(length(emp_site)!=0){dataset=dataset[,-emp_site]}
 
 ######
 #Class
@@ -401,7 +420,10 @@ if(anyNA(dataset$FG))
   if(verbose){message (" ")}
 }
 
-if(verbose){message ("Data was succesfully read!")}
+if(verbose){message("Data was succesfully read!")}
+
+if(length(c_rows)!=0){if(verbose){message("Row/s removed: ", paste(c_rows, collapse = " "),".")}}
+if(length(emp_site)!=0){if(verbose){message("Colum/s removed: ", paste(emp_site_name, collapse = " "),".")}}
 
 return(dataset)
 }
