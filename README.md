@@ -1,0 +1,2 @@
+# Metrix
+‘metrix’ R package was developed for calculating various metrics of the macroinvertebrate community. The package offers three key advantages: (1) it supports computations at multiple taxonomic levels, allowing for flexible analysis based on different levels of taxonomic detail; (2) it combines a variety of metrics and biotic indices calculations in a single package; (3) it is capable of reading biological spreadsheets from large volumes of data, facilitating decision-making and data interpretation processes for both the scientific community and management agencies.
